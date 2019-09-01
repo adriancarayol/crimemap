@@ -14,9 +14,20 @@ defmodule CrimemapWeb.Router do
   end
 
   scope "/", CrimemapWeb do
-    pipe_through :browser
+    pipe_through  [:browser, CrimemapWeb.Plugs.Guest]
 
-    get "/", PageController, :index
+    resources "/register", UserController, only: [:create, :new]
+    get "/login", SessionController, :new
+    post "/login", SessionController, :create
+  end
+
+  scope "/", CrimemapWeb do
+    pipe_through  [:browser, CrimemapWeb.Plugs.Auth]
+
+    delete "/logout", SessionController, :delete
+    get "/show", PageController, :show
+
+    get "/user", UserController, :show
   end
 
   # Other scopes may use custom stacks.

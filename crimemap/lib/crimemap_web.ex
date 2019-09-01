@@ -41,6 +41,7 @@ defmodule CrimemapWeb do
 
       import CrimemapWeb.ErrorHelpers
       import CrimemapWeb.Gettext
+      import Crimemap.Accounts.Auth, only: [signed_in?: 1]
       alias CrimemapWeb.Router.Helpers, as: Routes
     end
   end
