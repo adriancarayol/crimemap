@@ -25,7 +25,7 @@ defmodule CrimemapWeb.Router do
     pipe_through  [:browser, CrimemapWeb.Plugs.Auth]
 
     delete "/logout", SessionController, :delete
-    get "/show", PageController, :show
+    get "/", PageController, :show
 
     get "/user", UserController, :show
   end
