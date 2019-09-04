@@ -21,9 +21,10 @@
                 </span>
               </div>
             </div>
-            <div class="field">
-              <%= submit "Submit", class: "button is-primary is-pulled-right" %>
-              <%= link "Register", to: Routes.user_path(@conn, :new), class: "is-link is-pulled-left" %>
+            <div class="field is-grouped is-grouped-right">
+              <div class="control">
+                  <%= submit "Login", class: "button is-primary" %>
+              </div>
             </div>
           <% end %>
           </div>
