@@ -23,6 +23,7 @@ defmodule Crimemap.Accounts.User do
     |> validate_length(:password, min: 6)
     |> validate_confirmation(:password)
     |> validate_format(:username, ~r/^[a-z0-9][a-z0-9]+[a-z0-9]$/i)
+    |> validate_format(:email, ~r/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/)
     |> validate_length(:username, min: 6)
     |> lowercase_username
     |> unique_constraint(:username)
@@ -38,7 +39,6 @@ defmodule Crimemap.Accounts.User do
     else
       changeset
     end
-
   end
 
   defp lowercase_username(changeset) do

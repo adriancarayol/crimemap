@@ -7,8 +7,8 @@ defmodule Crimemap.AccountsTest do
   describe "users" do
     alias Crimemap.Accounts.User
 
-    @valid_attrs %{email: "some email", password: "some encrypted_password", username: "username"}
-    @update_attrs %{email: "some updated email", password: "some updated encrypted_password", username: "updatedusername"}
+    @valid_attrs %{email: "email@es.es", password: "some encrypted_password", username: "username"}
+    @update_attrs %{email: "updated@es.es", password: "some updated encrypted_password", username: "updatedusername"}
     @invalid_attrs %{email: nil, password: nil, username: nil}
 
     def user_fixture(attrs \\ %{}) do
@@ -33,7 +33,7 @@ defmodule Crimemap.AccountsTest do
 
     test "create_user/1 with valid data creates a user" do
       assert {:ok, %User{} = user} = Accounts.create_user(@valid_attrs)
-      assert user.email == "some email"
+      assert user.email == "email@es.es"
       assert Encryption.validate_password(user, "some encrypted_password") == true
       assert user.username == "username"
     end
@@ -45,7 +45,7 @@ defmodule Crimemap.AccountsTest do
     test "update_user/2 with valid data updates the user" do
       user = user_fixture()
       assert {:ok, %User{} = user} = Accounts.update_user(user, @update_attrs)
-      assert user.email == "some updated email"
+      assert user.email == "updated@es.es"
       assert Encryption.validate_password(user, "some updated encrypted_password") == true
       assert user.username == "updatedusername"
     end

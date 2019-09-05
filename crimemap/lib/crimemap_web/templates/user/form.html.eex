@@ -7,14 +7,14 @@
 
   <%= label f, :username, class: "label" %>
   <div class="field">
-    <%= text_input f, :username, class: "input" %>
+    <%= text_input f, :username, placeholder: "Username", class: "input" %>
   </div>
   <%= error_tag f, :username %>
 
   
   <%= label f, :email, class: "label" %>
   <div class="field">
-    <%= text_input f, :email, class: "input" %>
+    <%= text_input f, :email, placeholder: "Email", class: "input" %>
   </div>
   <%= error_tag f, :email %>
 
@@ -32,7 +32,7 @@
 
   <div class="field is-grouped is-grouped-right">
     <div class="control">
-      <%= submit "Save", class: "button is-primary" %>
+      <%= submit "Submit", class: "button is-primary" %>
     </div>
   </div>
 <% end %>
