@@ -1,15 +1,31 @@
-<h1>Show User</h1>
+<div class="container">
+  <h1 class="title has-text-centered">Profile information</h1>
+  <div class="columns is-centered">
+    <div class="column is-half is-one-third">
+      <div class="card">
+          <div class="card-image">
+            <figure class="image is-4by3">
+              <img src="<%= Routes.static_path(@conn, "/images/profile.svg") %>" alt="Placeholder image">
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-left">
+                <figure class="image is-48x48">
+                  <img src="<%= Routes.static_path(@conn, "/images/profile.svg") %>" alt="Placeholder image">
+                </figure>
+              </div>
+              <div class="media-content">
+                <p class="title is-4"><%= @user.username %></p>
+                <p class="subtitle is-6"><%= @user.email %></p>
+              </div>
+            </div>
 
-<ul>
-
-  <li>
-    <strong>Username:</strong>
-    <%= @user.username %>
-  </li>
-
-  <li>
-    <strong>Email:</strong>
-    <%= @user.email %>
-  </li>
-
-</ul>
+            <div class="content">
+              <time datetime="<%= @user.inserted_at %>"><strong>Joined:</strong> <%= @user.inserted_at %></time>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

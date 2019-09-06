@@ -7,26 +7,46 @@
 
   <%= label f, :username, class: "label" %>
   <div class="field">
-    <%= text_input f, :username, placeholder: "Username", class: "input" %>
+    <div class="control has-icons-left">
+      <%= text_input f, :username, placeholder: "Username", class: "input" %>
+      <span class="icon is-small is-left">
+          <i class="fas fa-user"></i>
+      </span>
+    </div>
   </div>
   <%= error_tag f, :username %>
 
   
   <%= label f, :email, class: "label" %>
   <div class="field">
-    <%= text_input f, :email, placeholder: "Email", class: "input" %>
+    <div class="control has-icons-left">
+      <%= text_input f, :email, placeholder: "Email", class: "input" %>
+      <span class="icon is-small is-left">
+          <i class="fas fa-envelope-square"></i>
+      </span>
+    </div>
   </div>
   <%= error_tag f, :email %>
 
   <%= label f, :password, class: "label" %>
   <div class="field">
-    <%= password_input f, :password, placeholder: "Password", class: "input" %>
+    <div class="control has-icons-left">
+      <%= password_input f, :password, placeholder: "Password", class: "input" %>
+      <span class="icon is-small is-left">
+          <i class="fas fa-lock"></i>
+      </span>
+    </div>
   </div>
   <%= error_tag f, :password %>
 
   <%= label f, :password_confirmation, class: "label" %>  
   <div class="field">
-    <%= password_input f, :password_confirmation, placeholder: "Confirm Password", class: "input" %>
+    <div class="control has-icons-left">
+      <%= password_input f, :password_confirmation, placeholder: "Confirm Password", class: "input" %>
+      <span class="icon is-small is-left">
+        <i class="fas fa-lock"></i>
+      </span>
+    </div>
   </div>
   <%= error_tag f, :password_confirmation %>
 

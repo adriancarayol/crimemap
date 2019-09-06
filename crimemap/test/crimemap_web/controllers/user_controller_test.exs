@@ -26,7 +26,7 @@ defmodule CrimemapWeb.UserControllerTest do
       assert redirected_to(conn) == Routes.user_path(conn, :show)
 
       conn = get(conn, Routes.user_path(conn, :show))
-      assert html_response(conn, 200) =~ "Show User"
+      assert html_response(conn, 200) =~ "Profile information"
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
