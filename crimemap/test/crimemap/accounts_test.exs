@@ -22,7 +22,11 @@ defmodule Crimemap.AccountsTest do
 
     test "list_users/0 returns all users" do
       user = user_fixture()
-      assert Accounts.list_users() == [user]
+      list_users = for q <- Accounts.list_users() do
+        {q.email, q.username, q.encrypted_password}
+      end
+
+      assert list_users == [{user.email, user.username, user.encrypted_password}]
     end
 
     test "get_user!/1 returns the user with given id" do
