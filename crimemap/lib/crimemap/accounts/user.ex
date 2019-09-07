@@ -12,6 +12,7 @@ defmodule Crimemap.Accounts.User do
     # Virtual fields
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
+
     timestamps()
   end
 

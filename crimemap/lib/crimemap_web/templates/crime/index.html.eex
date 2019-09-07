@@ -1,0 +1,36 @@
+<h1>Listing Crimes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>Details</th>
+      <th>Title</th>
+      <th>Validated</th>
+      <th>Validation msg</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for crime <- @crimes do %>
+    <tr>
+      <td><%= crime.latitude %></td>
+      <td><%= crime.longitude %></td>
+      <td><%= crime.details %></td>
+      <td><%= crime.title %></td>
+      <td><%= crime.validated %></td>
+      <td><%= crime.validation_msg %></td>
+
+      <td>
+        <%= link "Show", to: Routes.crime_path(@conn, :show, crime) %>
+        <%= link "Edit", to: Routes.crime_path(@conn, :edit, crime) %>
+        <%= link "Delete", to: Routes.crime_path(@conn, :delete, crime), method: :delete, data: [confirm: "Are you sure?"] %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Crime", to: Routes.crime_path(@conn, :new) %></span>

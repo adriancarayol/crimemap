@@ -1,0 +1,38 @@
+<h1>Show Crime</h1>
+
+<ul>
+
+  <li>
+    <strong>Latitude:</strong>
+    <%= @crime.latitude %>
+  </li>
+
+  <li>
+    <strong>Longitude:</strong>
+    <%= @crime.longitude %>
+  </li>
+
+  <li>
+    <strong>Details:</strong>
+    <%= @crime.details %>
+  </li>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @crime.title %>
+  </li>
+
+  <li>
+    <strong>Validated:</strong>
+    <%= @crime.validated %>
+  </li>
+
+  <li>
+    <strong>Validation msg:</strong>
+    <%= @crime.validation_msg %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.crime_path(@conn, :edit, @crime) %></span>
+<span><%= link "Back", to: Routes.crime_path(@conn, :index) %></span>

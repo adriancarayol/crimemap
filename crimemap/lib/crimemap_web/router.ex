@@ -17,6 +17,8 @@ defmodule CrimemapWeb.Router do
     pipe_through  [:browser, CrimemapWeb.Plugs.Guest]
 
     resources "/register", UserController, only: [:create, :new]
+    resources "/crimes", CrimeController
+
     get "/login", SessionController, :new
     post "/login", SessionController, :create
   end
