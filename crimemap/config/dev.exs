@@ -6,6 +6,7 @@ config :crimemap, Crimemap.Repo,
   password: "postgres",
   database: "crimemap_dev",
   hostname: "localhost",
+  types: Crimemap.PostgrexTypes,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 

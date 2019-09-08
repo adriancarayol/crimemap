@@ -10,10 +10,6 @@ use Mix.Config
 config :crimemap,
   ecto_repos: [Crimemap.Repo], types: Crimemap.PostgrexTypes
 
-
-config :geo_postgis,
-  json_library: Poison
-
 # Configures the endpoint
 config :crimemap, CrimemapWeb.Endpoint,
   url: [host: "localhost"],
@@ -28,6 +24,8 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+config :geo_postgis, :json_library, Jason
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
