@@ -27,7 +27,7 @@ defmodule CrimemapWeb.UserController do
     end
   end
 
-  @spec create(Plug.Conn.t(), map()) :: Plug.Conn.t()
+  @spec show(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def show(conn, _params) do
     current_user = get_session(conn, :current_user_id)
     user = Accounts.get_user!(current_user)

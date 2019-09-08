@@ -1,11 +1,12 @@
 version: '3'
 services:
   postgres:
-    image: postgres
+    image: kartoza/postgis
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=crimemap_dev
+      - POSTGRES_MULTIPLE_EXTENSIONS=postgis,hstore,postgis_topology
     volumes:
       - db-data:/var/lib/postgresql/data
     ports:

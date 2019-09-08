@@ -6,11 +6,11 @@
   <% end %>
 
   <%= label f, :latitude %>
-  <%= number_input f, :latitude %>
+  <%= text_input f, :latitude %>
   <%= error_tag f, :latitude %>
 
   <%= label f, :longitude %>
-  <%= number_input f, :longitude %>
+  <%= text_input f, :longitude %>
   <%= error_tag f, :longitude %>
 
   <%= label f, :details %>

@@ -17,7 +17,7 @@ defmodule CrimemapWeb.Router do
     pipe_through  [:browser, CrimemapWeb.Plugs.Guest]
 
     resources "/register", UserController, only: [:create, :new]
-    resources "/crimes", CrimeController
+    # resources "/crimes", CrimeController, only: [:index]
 
     get "/login", SessionController, :new
     post "/login", SessionController, :create
@@ -28,6 +28,15 @@ defmodule CrimemapWeb.Router do
 
     delete "/logout", SessionController, :delete
     get "/", PageController, :show
+
+    get "/crimes", CrimeController, :index
+
+    get "/crime", CrimeController, :new
+    post "/crime", CrimeController, :create
+    get "/crime/:id", CrimeController, :show
+    get "/crime/edit/:id", CrimeController, :edit
+    put "/crime/edit/:id", CrimeController, :update
+    delete "/crime/:id", CrimeController, :delete
 
     get "/user", UserController, :show
   end

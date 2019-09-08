@@ -8,7 +8,11 @@
 use Mix.Config
 
 config :crimemap,
-  ecto_repos: [Crimemap.Repo]
+  ecto_repos: [Crimemap.Repo], types: Crimemap.PostgrexTypes
+
+
+config :geo_postgis,
+  json_library: Poison
 
 # Configures the endpoint
 config :crimemap, CrimemapWeb.Endpoint,

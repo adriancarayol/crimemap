@@ -3,6 +3,7 @@ defmodule CrimemapWeb.CrimeController do
 
   alias Crimemap.Crimes
   alias Crimemap.Crimes.Crime
+  alias Crimemap.Accounts
 
   def index(conn, _params) do
     crimes = Crimes.list_crimes()
@@ -15,6 +16,16 @@ defmodule CrimemapWeb.CrimeController do
   end
 
   def create(conn, %{"crime" => crime_params}) do
+    current_user = get_session(conn, :current_user_id)
+
+    user = try do
+      Accounts.get_user!(current_user)
+    rescue
+      _ in Ecto.NoResultsError -> %Accounts.User{}
+    end
+
+    crime_params = Map.put(crime_params, "user_id", user.id)
+
     case Crimes.create_crime(crime_params) do
       {:ok, crime} ->
         conn

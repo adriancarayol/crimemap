@@ -44,7 +44,9 @@ defmodule Crimemap.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:comeonin, "~> 5.1"},
-      {:argon2_elixir, "~> 2.0"}
+      {:argon2_elixir, "~> 2.0"},
+      {:geo_postgis, "~> 3.1"},
+      {:geo, "~> 3.3"}
     ]
   end
 

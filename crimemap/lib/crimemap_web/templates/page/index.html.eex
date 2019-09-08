@@ -13,7 +13,7 @@
 
 
 <div id="floating-panel">
-  <input id="pac-input" type="text" placeholder="Search Box">
+  <input id="pac-input" type="text" placeholder="Search a location...">
   <div class="buttons">
     <input onclick="clearMarkers();" type=button value="Hide Markers">
     <input onclick="showMarkers();" type=button value="Show All Markers">

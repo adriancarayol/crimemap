@@ -9,8 +9,10 @@ defmodule Crimemap.CrimesTest do
 
     @valid_user_attrs %{email: "email@es.es", password: "some encrypted_password", username: "username"}
 
-    @valid_attrs %{details: "some details", latitude: 42, longitude: 42, title: "some title", validated: true, validation_msg: "some validation_msg"}
-    @update_attrs %{details: "some updated details", latitude: 43, longitude: 43, title: "some updated title", validated: false, validation_msg: "some updated validation_msg"}
+    @valid_attrs %{details: "some details", latitude: Decimal.cast("42.000"), longitude: Decimal.cast("42.000"),
+                    title: "some title", validated: true, validation_msg: "some validation_msg"}
+    @update_attrs %{details: "some updated details", latitude: Decimal.cast("43.000"), longitude: Decimal.cast("43.000"),
+                    title: "some updated title", validated: false, validation_msg: "some updated validation_msg"}
     @invalid_attrs %{details: nil, latitude: nil, longitude: nil, title: nil, validated: nil, validation_msg: nil, user: nil}
 
     defp user_fixture(attrs \\ %{}) do
@@ -21,16 +23,18 @@ defmodule Crimemap.CrimesTest do
 
       user
     end
-  
+
     def crime_fixture(attrs \\ %{}) do
       user = user_fixture()
-    
+
+      attrs_with_user = Map.put(@valid_attrs, :user_id, user.id)
+
       {:ok, crime} =
         attrs
-        |> Enum.into(@valid_attrs)
+        |> Enum.into(attrs_with_user)
         |> Crimes.create_crime()
 
-      # Crimes.Crime.set_user_changeset(crime, user)
+      crime
     end
 
     test "list_crimes/0 returns all crimes" do
@@ -44,13 +48,18 @@ defmodule Crimemap.CrimesTest do
     end
 
     test "create_crime/1 with valid data creates a crime" do
-      assert {:ok, %Crime{} = crime} = Crimes.create_crime(@valid_attrs)
+      user = user_fixture()
+
+      attrs_with_user = Map.put(@valid_attrs, :user_id, user.id)
+
+      assert {:ok, %Crime{} = crime} = Crimes.create_crime(attrs_with_user)
       assert crime.details == "some details"
-      assert crime.latitude == 42
-      assert crime.longitude == 42
+      assert crime.latitude == Decimal.cast("42.000")
+      assert crime.longitude == Decimal.cast("42.000")
       assert crime.title == "some title"
       assert crime.validated == true
       assert crime.validation_msg == "some validation_msg"
+      assert crime.user_id == user.id
     end
 
     test "create_crime/1 with invalid data returns error changeset" do
@@ -61,8 +70,8 @@ defmodule Crimemap.CrimesTest do
       crime = crime_fixture()
       assert {:ok, %Crime{} = crime} = Crimes.update_crime(crime, @update_attrs)
       assert crime.details == "some updated details"
-      assert crime.latitude == 43
-      assert crime.longitude == 43
+      assert crime.latitude == Decimal.cast("43.000")
+      assert crime.longitude == Decimal.cast("43.000")
       assert crime.title == "some updated title"
       assert crime.validated == false
       assert crime.validation_msg == "some updated validation_msg"
