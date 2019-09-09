@@ -3,13 +3,8 @@
 <ul>
 
   <li>
-    <strong>Latitude:</strong>
-    <%= @crime.latitude %>
-  </li>
-
-  <li>
-    <strong>Longitude:</strong>
-    <%= @crime.longitude %>
+    <strong>Point:</strong>
+    <%= inspect @crime.point.coordinates %>
   </li>
 
   <li>

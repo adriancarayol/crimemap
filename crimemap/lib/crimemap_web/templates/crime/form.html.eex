@@ -5,12 +5,11 @@
     </div>
   <% end %>
 
-  <%= label f, :latitude %>
-  <%= text_input f, :latitude %>
+
+  <%= hidden_input f, :latitude %>
   <%= error_tag f, :latitude %>
 
-  <%= label f, :longitude %>
-  <%= text_input f, :longitude %>
+  <%= hidden_input f, :longitude %>
   <%= error_tag f, :longitude %>
 
   <%= label f, :details %>
@@ -21,14 +20,6 @@
   <%= text_input f, :title %>
   <%= error_tag f, :title %>
 
-  <%= label f, :validated %>
-  <%= checkbox f, :validated %>
-  <%= error_tag f, :validated %>
-
-  <%= label f, :validation_msg %>
-  <%= text_input f, :validation_msg %>
-  <%= error_tag f, :validation_msg %>
-
   <div>
     <%= submit "Save" %>
   </div>
@@ -37,14 +28,15 @@
 <div id="floating-panel">
   <input id="pac-input" type="text" placeholder="Search a location...">
   <div class="buttons">
-    <input onclick="deleteMarkers();" type=button value="Delete Markers">
+    <input onclick="deleteMarkers();" type=button value="Delete marker">
   </div>
 </div>
 <div id="map"></div>
 <script>
       var map;
-      var markers = [];
-      var circles = [];
+      var marker;
+      var circle;
+  
       function initAutocomplete() {
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -33.8688, lng: 151.2195},
@@ -147,11 +139,17 @@
       }
       // Adds a marker to the map and push to the array.
       function addMarker(location) {
-        var marker = new google.maps.Marker({
+        if (marker) {
+          marker.setMap(null);
+        }
+        if (circle) {
+          circle.setMap(null);
+        }
+        marker = new google.maps.Marker({
           position: location,
           map: map
         });
-        var circle = new google.maps.Circle({
+        circle = new google.maps.Circle({
             strokeColor: '#FF0000',
             strokeOpacity: 0.8,
             strokeWeight: 2,
@@ -161,15 +159,17 @@
             center: location,
             radius: 50
         });
-        markers.push(marker);
-        circles.push(circle);
+        document.getElementById('crime_latitude').value = marker.position.lat();
+        document.getElementById('crime_longitude').value = marker.position.lng();
       }
 
       // Sets the map on all markers in the array.
       function setMapOnAll(map) {
-        for (var i = 0; i < markers.length; i++) {
-          markers[i].setMap(map);
-          circles[i].setMap(map);
+        if (marker) {
+          marker.setMap(map);
+        }
+        if (circle) {
+          circle.setMap(map);
         }
       }
 
@@ -181,8 +181,8 @@
       // Deletes all markers in the array by removing references to them.
       function deleteMarkers() {
         clearMarkers();
-        markers = [];
-        circles = [];
+        marker = null
+        circle = null;
       }
       function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         infoWindow.setPosition(pos);

@@ -9,9 +9,9 @@ defmodule Crimemap.CrimesTest do
 
     @valid_user_attrs %{email: "email@es.es", password: "some encrypted_password", username: "username"}
 
-    @valid_attrs %{details: "some details", latitude: Decimal.cast("42.000"), longitude: Decimal.cast("42.000"),
+    @valid_attrs %{details: "some details", latitude: "42.000", longitude: "42.000",
                     title: "some title", validated: true, validation_msg: "some validation_msg"}
-    @update_attrs %{details: "some updated details", latitude: Decimal.cast("43.000"), longitude: Decimal.cast("43.000"),
+    @update_attrs %{details: "some updated details", latitude: "43.000", longitude: "43.000",
                     title: "some updated title", validated: false, validation_msg: "some updated validation_msg"}
     @invalid_attrs %{details: nil, latitude: nil, longitude: nil, title: nil, validated: nil, validation_msg: nil, user: nil}
 
@@ -39,12 +39,22 @@ defmodule Crimemap.CrimesTest do
 
     test "list_crimes/0 returns all crimes" do
       crime = crime_fixture()
-      assert Crimes.list_crimes() == [crime]
+      list_crimes = for q <- Crimes.list_crimes() do
+        {q.user_id, q.validated, q.validation_msg, q.point, q.details, q.title, q.updated_at, q.inserted_at}
+      end
+      assert list_crimes == [{crime.user_id, crime.validated, crime.validation_msg, 
+                             crime.point, crime.details, crime.title, crime.updated_at, crime.inserted_at}]
     end
 
     test "get_crime!/1 returns the crime with given id" do
-      crime = crime_fixture()
-      assert Crimes.get_crime!(crime.id) == crime
+      created_crime = crime_fixture()
+      crime = Crimes.get_crime!(created_crime.id)
+
+      assert {crime.user_id, crime.validated, crime.validation_msg, 
+              crime.point, crime.details, crime.title, crime.updated_at, crime.inserted_at} == {created_crime.user_id, 
+              created_crime.validated, created_crime.validation_msg, 
+              created_crime.point, created_crime.details, created_crime.title,
+              created_crime.updated_at, created_crime.inserted_at}
     end
 
     test "create_crime/1 with valid data creates a crime" do
@@ -54,8 +64,7 @@ defmodule Crimemap.CrimesTest do
 
       assert {:ok, %Crime{} = crime} = Crimes.create_crime(attrs_with_user)
       assert crime.details == "some details"
-      assert crime.latitude == Decimal.cast("42.000")
-      assert crime.longitude == Decimal.cast("42.000")
+      assert crime.point == %Geo.Point{coordinates: {42.0, 42.0}, srid: 4326}
       assert crime.title == "some title"
       assert crime.validated == true
       assert crime.validation_msg == "some validation_msg"
@@ -70,8 +79,7 @@ defmodule Crimemap.CrimesTest do
       crime = crime_fixture()
       assert {:ok, %Crime{} = crime} = Crimes.update_crime(crime, @update_attrs)
       assert crime.details == "some updated details"
-      assert crime.latitude == Decimal.cast("43.000")
-      assert crime.longitude == Decimal.cast("43.000")
+      assert crime.point == %Geo.Point{coordinates: {43.0, 43.0}, srid: 4326}
       assert crime.title == "some updated title"
       assert crime.validated == false
       assert crime.validation_msg == "some updated validation_msg"
