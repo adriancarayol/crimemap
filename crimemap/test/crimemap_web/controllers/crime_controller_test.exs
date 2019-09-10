@@ -5,12 +5,13 @@ defmodule CrimemapWeb.CrimeControllerTest do
   alias Crimemap.Accounts
 
   @valid_user_attrs %{email: "email@es.es", password: "some encrypted_password", username: "username"}
-  @create_attrs %{details: "some details", latitude: 42, longitude: 42, title: "some title", validated: true, validation_msg: "some validation_msg"}
-  @update_attrs %{details: "some updated details", latitude: 43, longitude: 43, title: "some updated title", validated: false, validation_msg: "some updated validation_msg"}
+  @create_attrs %{details: "some details", latitude: "42.0", longitude: "42.0", title: "some title", validated: true, validation_msg: "some validation_msg"}
+  @update_attrs %{details: "some updated details", latitude: "43.0", longitude: "43.0", title: "some updated title", validated: false, validation_msg: "some updated validation_msg"}
   @invalid_attrs %{details: nil, latitude: nil, longitude: nil, title: nil, validated: nil, validation_msg: nil}
 
   def fixture(:crime) do
     {:ok, user} = Accounts.create_user(@valid_user_attrs)
+
     attrs_with_user = Map.put(@create_attrs, :user_id, user.id)
     {:ok, crime} = Crimes.create_crime(attrs_with_user)
     crime
@@ -18,6 +19,10 @@ defmodule CrimemapWeb.CrimeControllerTest do
 
   describe "index" do
     test "lists all crimes", %{conn: conn} do
+      {:ok, _} = Accounts.create_user(@valid_user_attrs)
+
+      conn = post(conn, Routes.session_path(conn, :create), session: %{username: "username", password: "some encrypted_password"})
+
       conn = get(conn, Routes.crime_path(conn, :index))
       assert html_response(conn, 200) =~ "Listing Crimes"
     end
@@ -25,6 +30,8 @@ defmodule CrimemapWeb.CrimeControllerTest do
 
   describe "new crime" do
     test "renders form", %{conn: conn} do
+      {:ok, _} = Accounts.create_user(@valid_user_attrs)
+      conn = post(conn, Routes.session_path(conn, :create), session: %{username: "username", password: "some encrypted_password"})
       conn = get(conn, Routes.crime_path(conn, :new))
       assert html_response(conn, 200) =~ "New Crime"
     end
@@ -33,6 +40,8 @@ defmodule CrimemapWeb.CrimeControllerTest do
   describe "create crime" do
     test "redirects to show when data is valid", %{conn: conn} do
       {:ok, user} = Accounts.create_user(@valid_user_attrs)
+
+      conn = post(conn, Routes.session_path(conn, :create), session: %{username: "username", password: "some encrypted_password"})
 
       conn = post(conn, Routes.crime_path(conn, :create), crime: Map.put(@create_attrs, :user_id, user.id))
 
@@ -44,6 +53,8 @@ defmodule CrimemapWeb.CrimeControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
+      {:ok, _} = Accounts.create_user(@valid_user_attrs)
+      conn = post(conn, Routes.session_path(conn, :create), session: %{username: "username", password: "some encrypted_password"})
       conn = post(conn, Routes.crime_path(conn, :create), crime: @invalid_attrs)
       assert html_response(conn, 200) =~ "New Crime"
     end
@@ -53,6 +64,7 @@ defmodule CrimemapWeb.CrimeControllerTest do
     setup [:create_crime]
 
     test "renders form for editing chosen crime", %{conn: conn, crime: crime} do
+      conn = post(conn, Routes.session_path(conn, :create), session: %{username: "username", password: "some encrypted_password"})
       conn = get(conn, Routes.crime_path(conn, :edit, crime))
       assert html_response(conn, 200) =~ "Edit Crime"
     end
@@ -62,6 +74,7 @@ defmodule CrimemapWeb.CrimeControllerTest do
     setup [:create_crime]
 
     test "redirects when data is valid", %{conn: conn, crime: crime} do
+      conn = post(conn, Routes.session_path(conn, :create), session: %{username: "username", password: "some encrypted_password"})
       conn = put(conn, Routes.crime_path(conn, :update, crime), crime: @update_attrs)
       assert redirected_to(conn) == Routes.crime_path(conn, :show, crime)
 
@@ -70,6 +83,7 @@ defmodule CrimemapWeb.CrimeControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, crime: crime} do
+      conn = post(conn, Routes.session_path(conn, :create), session: %{username: "username", password: "some encrypted_password"})
       conn = put(conn, Routes.crime_path(conn, :update, crime), crime: @invalid_attrs)
       assert html_response(conn, 200) =~ "Edit Crime"
     end
@@ -79,6 +93,7 @@ defmodule CrimemapWeb.CrimeControllerTest do
     setup [:create_crime]
 
     test "deletes chosen crime", %{conn: conn, crime: crime} do
+      conn = post(conn, Routes.session_path(conn, :create), session: %{username: "username", password: "some encrypted_password"})
       conn = delete(conn, Routes.crime_path(conn, :delete, crime))
       assert redirected_to(conn) == Routes.crime_path(conn, :index)
       assert_error_sent 404, fn ->

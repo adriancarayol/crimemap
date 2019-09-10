@@ -42,7 +42,7 @@ defmodule Crimemap.CrimesTest do
       list_crimes = for q <- Crimes.list_crimes() do
         {q.user_id, q.validated, q.validation_msg, q.point, q.details, q.title, q.updated_at, q.inserted_at}
       end
-      assert list_crimes == [{crime.user_id, crime.validated, crime.validation_msg, 
+      assert list_crimes == [{crime.user_id, crime.validated, crime.validation_msg,
                              crime.point, crime.details, crime.title, crime.updated_at, crime.inserted_at}]
     end
 
@@ -50,9 +50,9 @@ defmodule Crimemap.CrimesTest do
       created_crime = crime_fixture()
       crime = Crimes.get_crime!(created_crime.id)
 
-      assert {crime.user_id, crime.validated, crime.validation_msg, 
-              crime.point, crime.details, crime.title, crime.updated_at, crime.inserted_at} == {created_crime.user_id, 
-              created_crime.validated, created_crime.validation_msg, 
+      assert {crime.user_id, crime.validated, crime.validation_msg,
+              crime.point, crime.details, crime.title, crime.updated_at, crime.inserted_at} == {created_crime.user_id,
+              created_crime.validated, created_crime.validation_msg,
               created_crime.point, created_crime.details, created_crime.title,
               created_crime.updated_at, created_crime.inserted_at}
     end
@@ -86,9 +86,14 @@ defmodule Crimemap.CrimesTest do
     end
 
     test "update_crime/2 with invalid data returns error changeset" do
-      crime = crime_fixture()
-      assert {:error, %Ecto.Changeset{}} = Crimes.update_crime(crime, @invalid_attrs)
-      assert crime == Crimes.get_crime!(crime.id)
+      created_crime = crime_fixture()
+      assert {:error, %Ecto.Changeset{}} = Crimes.update_crime(created_crime, @invalid_attrs)
+      crime = Crimes.get_crime!(created_crime.id)
+      assert {crime.user_id, crime.validated, crime.validation_msg,
+              crime.point, crime.details, crime.title, crime.updated_at, crime.inserted_at} == {created_crime.user_id,
+              created_crime.validated, created_crime.validation_msg,
+              created_crime.point, created_crime.details, created_crime.title,
+              created_crime.updated_at, created_crime.inserted_at}
     end
 
     test "delete_crime/1 deletes the crime" do
