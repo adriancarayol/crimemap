@@ -22,7 +22,7 @@
         <div id="navbarBasicExample" class="navbar-menu">
           <div class="navbar-start">
             <%= link "My profile", to: Routes.user_path(@conn, :show), method: :get, class: "navbar-item" %>
-            <%= link "Crimes", to: Routes.crime_path(@conn, :new), method: :get, class: "navbar-item" %>
+            <%= link "Crimes", to: Routes.crime_path(@conn, :index), method: :get, class: "navbar-item" %>
           </div>
 
           <div class="navbar-end">
