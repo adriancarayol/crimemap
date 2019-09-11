@@ -17,14 +17,13 @@ defmodule CrimemapWeb.Router do
     pipe_through  [:browser, CrimemapWeb.Plugs.Guest]
 
     resources "/register", UserController, only: [:create, :new]
-    # resources "/crimes", CrimeController, only: [:index]
 
     get "/login", SessionController, :new
     post "/login", SessionController, :create
   end
 
   scope "/", CrimemapWeb do
-    pipe_through  [:browser, CrimemapWeb.Plugs.Auth]
+    pipe_through [:browser, CrimemapWeb.Plugs.Auth]
 
     delete "/logout", SessionController, :delete
     get "/", PageController, :show
@@ -41,8 +40,10 @@ defmodule CrimemapWeb.Router do
     get "/user", UserController, :show
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", CrimemapWeb do
-  #   pipe_through :api
-  # end
+  # API
+  scope "/api", CrimemapWeb do
+    pipe_through :api
+
+    resources "/crimes", API.CrimeController, only: [:index]
+  end
 end

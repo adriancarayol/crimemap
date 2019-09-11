@@ -6,8 +6,7 @@ defmodule CrimemapWeb.CrimeController do
   alias Crimemap.Accounts
 
   def index(conn, _params) do
-    crimes = Crimes.list_crimes()
-    render(conn, "index.html", crimes: crimes)
+    render(conn, "index.html")
   end
 
   def new(conn, _params) do

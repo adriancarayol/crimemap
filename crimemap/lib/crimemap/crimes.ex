@@ -101,4 +101,9 @@ defmodule Crimemap.Crimes do
   def change_crime(%Crime{} = crime) do
     Crime.changeset(crime, %{})
   end
+
+  def list_crimes_between_bounds(bound, srid \\ 4326) do
+    {lat1, lng1, lat2, lng2} = bound
+    Ecto.Adapters.SQL.query!(Crimemap.Repo, "SELECT * FROM crimes WHERE crimes.point && ST_MakeEnvelope($1, $2, $3, $4, $5);", [lat1, lng1, lat2, lng2, srid])
+  end
 end

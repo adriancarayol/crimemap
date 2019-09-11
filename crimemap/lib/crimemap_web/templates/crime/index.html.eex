@@ -1,16 +1,13 @@
 <h1>Listing Crimes</h1>
 
-<%= for crime <- @crimes do %>
-  <p class="crime-on-map" data-details="<%= crime.details %>" data-title="<%= crime.title %>" 
-     data-longitude="<%= parse_latitude(crime.point) %>" data-latitude="<%= parse_longitude(crime.point) %>" hidden>
-<% end %>
-
 <div id="floating-panel">
   <input id="pac-input" type="text" placeholder="Search a location...">
 </div>
 <div id="map"></div>
 <script>
       var map;
+      var markers = [];
+      var circles = [];
 
       function initAutocomplete() {
         map = new google.maps.Map(document.getElementById('map'), {
@@ -27,30 +24,9 @@
           },
           mapTypeId: google.maps.MapTypeId.ROADMAP
         });
-
-
-        var crimes = document.getElementsByClassName('crime-on-map');
-
-        Array.from(crimes).forEach((crime) => {
-          var position = {lat: parseFloat(crime.dataset.latitude), lng: parseFloat(crime.dataset.longitude)};
-
-          marker = new google.maps.Marker({
-            position: position,
-            map: map
-          });
-
-          circle = new google.maps.Circle({
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: '#FF0000',
-            fillOpacity: 0.35,
-            map: map,
-            center: position,
-            radius: 50
-          });
-        });
-
+  
+        map.addListener('bounds_changed', onBoundsChanged);
+      
         infoWindow = new google.maps.InfoWindow;
 
         // Try HTML5 geolocation.
@@ -129,6 +105,11 @@
             }
           });
           map.fitBounds(bounds);
+          var bounds = map.getBounds();
+          var ne = bounds.getNorthEast();
+          var sw = bounds.getSouthWest();
+          fillMap(ne.lng(), ne.lat(), sw.lng(), sw.lat());
+  
         });
       }
       function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -137,6 +118,74 @@
                               'Error: The Geolocation service failed.' :
                               'Error: Your browser doesn\'t support geolocation.');
         infoWindow.open(map);
+      }
+      function onBoundsChanged(event) {
+        var bounds = map.getBounds();
+        var ne = bounds.getNorthEast();
+        var sw = bounds.getSouthWest();
+
+        setTimeout(function() {
+          fillMap(ne.lng(), ne.lat(), sw.lng(), sw.lat(), 1000);
+        });
+      }
+      function infoCallback(infowindow, marker) {
+        return function() { infowindow.open(map, marker); };
+      }
+
+      function fillMap(lat1, lng1, lat2, lng2) {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(null);
+        }
+
+        for (var i = 0; i < circles.length; i++) {
+          circles[i].setMap(null);
+        }
+
+        markers = [];
+        circles = [];
+
+        var getUrl = window.location;
+        var baseUrl = getUrl.protocol + "//" + getUrl.host;
+        var url = new URL(baseUrl + '/api/crimes/'),
+        params = {lat1: lat1, lng1: lng1, lat2: lat2, lng2: lng2}
+        Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+  
+        fetch(url)
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          Array.from(data.crimes).forEach((crime) => {
+            var position = {lat: parseFloat(crime.lat), lng: parseFloat(crime.lng)};
+
+            var marker = new google.maps.Marker({
+              position: position,
+              map: map,
+              title: crime.title
+            });
+
+            var circle = new google.maps.Circle({
+              strokeColor: '#FF0000',
+              strokeOpacity: 0.8,
+              strokeWeight: 2,
+              fillColor: '#FF0000',
+              fillOpacity: 0.35,
+              map: map,
+              center: position,
+              radius: 50
+            });
+
+            var infowindow = new google.maps.InfoWindow({
+              content: "<div class=infowindow><h1>" + crime.title + "</h1><p>Details: " + crime.details + "</p><p>Inserted at: " + crime.inserted_at + "</p></div>"
+            });
+
+            google.maps.event.addListener(marker, 'click', infoCallback(infowindow, marker));
+
+            markers.push(marker);
+            circles.push(circle);
+
+          })
+        });
       }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMkItNBLJ2IfZw8WwwmrGHOsUfK4ZwWmU&libraries=places&callback=initAutocomplete" async defer></script>
