@@ -25,7 +25,7 @@
           mapTypeId: google.maps.MapTypeId.ROADMAP
         });
   
-        map.addListener('bounds_changed', onBoundsChanged);
+        map.addListener('idle', onBoundsChanged);
       
         infoWindow = new google.maps.InfoWindow;
 
