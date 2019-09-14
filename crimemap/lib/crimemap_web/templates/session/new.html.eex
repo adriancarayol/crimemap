@@ -1,7 +1,9 @@
-<div class='row'>
-    <div class='box'>
-        <h1 class='title has-text-centered'>Login</h1>
-          <div class='row'>
+<br>
+<div class="row">
+          <div class="columns is-vcentered is-centered">
+            <div class="column is-half">
+            <h1 class="title has-text-centered">Login</h1>
+            <div class="box">
           <%= form_for @conn, Routes.session_path(@conn, :new), [as: :session], fn f -> %>
             <div class="field">
               <label class="label">Username</label>
@@ -27,6 +29,7 @@
               </div>
             </div>
           <% end %>
+          </div>
           </div>
     </div>
 </div>
