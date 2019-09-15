@@ -1,4 +1,11 @@
-<h1>Listing Crimes</h1>
+<div class="row">
+  <br>
+  <div class="has-text-centered">
+    <h1 class="title">Search crimes on the map</h1>
+    <p class="has-text-weight-bold">or</p>
+    <%= link "New Crime", to: Routes.crime_path(@conn, :new), class: "button is-link" %>
+  </div>
+</div>
 
 <div id="floating-panel">
   <input id="pac-input" type="text" placeholder="Search a location...">
@@ -189,4 +196,3 @@
       }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMkItNBLJ2IfZw8WwwmrGHOsUfK4ZwWmU&libraries=places&callback=initAutocomplete" async defer></script>
-<span><%= link "New Crime", to: Routes.crime_path(@conn, :new) %></span>

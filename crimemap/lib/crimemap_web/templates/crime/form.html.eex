@@ -1,34 +1,57 @@
-<%= form_for @changeset, @action, fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
+<div class="row">
+  <div class="columns is-vcentered is-centered">
+    <div class="column is-half">
+      <div class='box'>
+        <%= form_for @changeset, @action, fn f -> %>
+          <%= if @changeset.action do %>
+            <div class="alert alert-danger">
+              <p>Oops, something went wrong! Please check the errors below.</p>
+            </div>
+          <% end %>
+
+
+          <%= hidden_input f, :latitude %>
+          <%= error_tag f, :latitude %>
+
+          <%= hidden_input f, :longitude %>
+          <%= error_tag f, :longitude %>
+
+          <%= label f, :title, class: "label" %>
+          <div class="field">
+            <div class="control has-icons-left">
+              <%= text_input f, :title, class: "input", placeholder: "Theft in jewelry." %>
+              <span class="icon is-small is-left">
+                  <i class="fas fa-heading"></i>
+              </span>
+            </div>
+          </div>
+          <%= error_tag f, :title %>
+
+          <%= label f, :details, class: "label" %>
+          <div class="field">
+            <div class="control has-icons-left">
+              <%= text_input f, :details, class: "input", placeholder: "Theft in jewelry for 4 hooded." %>
+              <span class="icon is-small is-left">
+                  <i class="fas fa-pen-square"></i>
+              </span>
+            </div>
+          </div>
+          <%= error_tag f, :details %>
+
+          <div class="field is-grouped is-grouped-right">
+            <div class="control">
+            <%= submit "Save", class: "button is-primary" %>
+            </div>
+          </div>
+        <% end %>
     </div>
-  <% end %>
-
-
-  <%= hidden_input f, :latitude %>
-  <%= error_tag f, :latitude %>
-
-  <%= hidden_input f, :longitude %>
-  <%= error_tag f, :longitude %>
-
-  <%= label f, :details %>
-  <%= text_input f, :details %>
-  <%= error_tag f, :details %>
-
-  <%= label f, :title %>
-  <%= text_input f, :title %>
-  <%= error_tag f, :title %>
-
-  <div>
-    <%= submit "Save" %>
   </div>
-<% end %>
-
+  </div>
+</div>
 <div id="floating-panel">
   <input id="pac-input" type="text" placeholder="Search a location...">
   <div class="buttons">
-    <input onclick="deleteMarkers();" type=button value="Delete marker">
+    <input onclick="deleteMarkers();" type=button value="Delete marker" class="button is-danger">
   </div>
 </div>
 <div id="map"></div>

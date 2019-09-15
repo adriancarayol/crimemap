@@ -22,6 +22,17 @@ defmodule Crimemap.Crimes do
   end
 
   @doc """
+  Returns the list of crimes filter by user.
+  ### Examples
+    iex > list_crimes_by_user(1)
+    [%Crime{user_id: 1}, ...]
+  """
+  def list_crimes_by_user(user_id) do
+    from(c in Crime, where: c.user_id == ^user_id)
+    |> Repo.all
+  end
+
+  @doc """
   Gets a single crime.
 
   Raises `Ecto.NoResultsError` if the Crime does not exist.
@@ -104,6 +115,6 @@ defmodule Crimemap.Crimes do
 
   def list_crimes_between_bounds(bound, srid \\ 4326) do
     {lat1, lng1, lat2, lng2} = bound
-    Ecto.Adapters.SQL.query!(Crimemap.Repo, "SELECT * FROM crimes WHERE crimes.point && ST_MakeEnvelope($1, $2, $3, $4, $5);", [lat1, lng1, lat2, lng2, srid])
+    Ecto.Adapters.SQL.query!(Crimemap.Repo, "SELECT * FROM crimes WHERE validated = $1 AND (crimes.point && ST_MakeEnvelope($2, $3, $4, $5, $6));", [true, lat1, lng1, lat2, lng2, srid])
   end
 end

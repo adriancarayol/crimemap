@@ -1,4 +1,5 @@
 <div class="container">
+<section class="section">
   <h1 class="title has-text-centered">Profile information</h1>
   <div class="columns is-centered">
     <div class="column is-half is-one-third">
@@ -28,4 +29,39 @@
       </div>
     </div>
   </div>
+  </section>
+  <section class="section">
+  <h1 class="title">My submitted crimes</h1>
+  <div class="row">
+    <div class="table-container">
+      <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Details</th>
+            <th>Validated</th>
+            <th>Rejection reason</th>
+          </tr>
+        </thead>
+         <tbody>
+        <%= for crime <- @crimes do %>
+          <tr>
+            <td><%= crime.title %></td>
+            <td><%= crime.details %></td>
+            <td class="has-text-centered">
+              <%= if crime.validated do %>
+                <span class="dot has-background-success"></span>
+              <% else %>
+                <span class="dot has-background-danger"></span>
+              <% end %>
+            </td>
+            <td>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  </section>
 </div>

@@ -15,6 +15,8 @@
                         'Elixir.Crimemap.DataCase',
                         'Elixir.Crimemap.PostgrexTypes',
                         'Elixir.Crimemap.Repo','Elixir.CrimemapWeb',
+                        'Elixir.CrimemapWeb.API.CrimeController',
+                        'Elixir.CrimemapWeb.API.CrimeView',
                         'Elixir.CrimemapWeb.ChannelCase',
                         'Elixir.CrimemapWeb.ConnCase',
                         'Elixir.CrimemapWeb.CrimeController',

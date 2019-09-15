@@ -3,9 +3,9 @@
         <h1 class="title has-text-centered">Register</h1>
         <div class="columns is-vcentered is-centered">
             <div class="column is-half">
-        <div class='box'>
-            <%= render "form.html", Map.put(assigns, :action, Routes.user_path(@conn, :create)) %>
-        </div>
-        </div>
+                <div class='box'>
+                    <%= render "form.html", Map.put(assigns, :action, Routes.user_path(@conn, :create)) %>
+                </div>
+            </div>
     </div>
 </div>

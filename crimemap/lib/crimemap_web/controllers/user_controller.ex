@@ -3,6 +3,7 @@ defmodule CrimemapWeb.UserController do
 
   alias Crimemap.Accounts
   alias Crimemap.Accounts.User
+  alias Crimemap.Crimes
 
   def index(conn, _params) do
     users = Accounts.list_users()
@@ -31,7 +32,8 @@ defmodule CrimemapWeb.UserController do
   def show(conn, _params) do
     current_user = get_session(conn, :current_user_id)
     user = Accounts.get_user!(current_user)
-    render(conn, "show.html", user: user)
+    crimes = Crimes.list_crimes_by_user(user.id)
+    render(conn, "show.html", user: user, crimes: crimes)
   end
 
   def edit(conn, %{"id" => id}) do

@@ -24,7 +24,7 @@ defmodule CrimemapWeb.CrimeControllerTest do
       conn = post(conn, Routes.session_path(conn, :create), session: %{username: "username", password: "some encrypted_password"})
 
       conn = get(conn, Routes.crime_path(conn, :index))
-      assert html_response(conn, 200) =~ "Listing Crimes"
+      assert html_response(conn, 200) =~ "Search crimes on the map"
     end
   end
 
