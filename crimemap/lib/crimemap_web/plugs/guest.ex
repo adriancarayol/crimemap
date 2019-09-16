@@ -1,16 +1,16 @@
 defmodule CrimemapWeb.Plugs.Guest do
   import Plug.Conn
-  import Phoenix.Controller
-  alias CrimemapWeb.Router.Helpers
+  alias Crimemap.Accounts
 
   def init(opts), do: opts
 
   def call(conn, _opts) do
-    if Plug.Conn.get_session(conn, :current_user_id) do
+    if user_id = Plug.Conn.get_session(conn, :current_user_id) do
+      current_user = Accounts.get_user!(user_id)
       conn
-      |> redirect(to: Helpers.page_path(conn, :show))
-      |> halt()
+        |> assign(:current_user, current_user)
+    else
+      conn
     end
-    conn
   end
 end

@@ -4,11 +4,6 @@
   <div class="columns is-centered">
     <div class="column is-half is-one-third">
       <div class="card">
-          <div class="card-image">
-            <figure class="image is-4by3">
-              <img src="<%= Routes.static_path(@conn, "/images/profile.svg") %>" alt="Placeholder image">
-            </figure>
-          </div>
           <div class="card-content">
             <div class="media">
               <div class="media-left">
@@ -31,7 +26,7 @@
   </div>
   </section>
   <section class="section">
-  <h1 class="title">My submitted crimes</h1>
+  <h1 class="title has-text-centered">My submitted crimes</h1>
   <div class="row">
     <div class="table-container">
       <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
@@ -41,12 +36,13 @@
             <th>Details</th>
             <th>Validated</th>
             <th>Rejection reason</th>
+            <th>Delete</th>
           </tr>
         </thead>
          <tbody>
         <%= for crime <- @crimes do %>
           <tr>
-            <td><%= crime.title %></td>
+            <td><%= link crime.title, to: Routes.crime_path(@conn, :edit, crime) %></td>
             <td><%= crime.details %></td>
             <td class="has-text-centered">
               <%= if crime.validated do %>
@@ -56,6 +52,10 @@
               <% end %>
             </td>
             <td>
+              <%= crime.validation_msg %>
+            </td>
+            <td>
+              <%= link "Delete", to: Routes.crime_path(@conn, :delete, crime), method: :delete %>
             </td>
           </tr>
         <% end %>

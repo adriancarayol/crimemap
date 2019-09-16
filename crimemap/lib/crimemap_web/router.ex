@@ -16,19 +16,19 @@ defmodule CrimemapWeb.Router do
   scope "/", CrimemapWeb do
     pipe_through  [:browser, CrimemapWeb.Plugs.Guest]
 
+    get "/", PageController, :show
+    get "/crimes", CrimeController, :index
+  
     resources "/register", UserController, only: [:create, :new]
-
+    
     get "/login", SessionController, :new
     post "/login", SessionController, :create
   end
 
   scope "/", CrimemapWeb do
     pipe_through [:browser, CrimemapWeb.Plugs.Auth]
-
+    
     delete "/logout", SessionController, :delete
-    get "/", PageController, :show
-
-    get "/crimes", CrimeController, :index
 
     get "/crime", CrimeController, :new
     post "/crime", CrimeController, :create

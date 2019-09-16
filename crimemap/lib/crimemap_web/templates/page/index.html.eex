@@ -34,7 +34,7 @@ html, body {
               <article class="media">
                 <div class="media-left">
                   <figure class="image is-64x64">
-                    <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
+                    <img src="<%= Routes.static_path(@conn, "/images/create.png") %>" alt="Image">
                   </figure>
                 </div>
                 <div class="media-content">
@@ -42,7 +42,7 @@ html, body {
                     <p>
                       <strong>Create</strong>
                       <br>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
+                      Create crimes anonymously to help others know what happened.
                     </p>
                   </div>
                 </div>
@@ -54,7 +54,7 @@ html, body {
               <article class="media">
                 <div class="media-left">
                   <figure class="image is-64x64">
-                    <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
+                    <img src="<%= Routes.static_path(@conn, "/images/help.png") %>" alt="Image">
                   </figure>
                 </div>
                 <div class="media-content">
@@ -62,7 +62,7 @@ html, body {
                     <p>
                       <strong>Help</strong>
                       <br>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
+                      Help others to know the most dangerous areas in the world.
                     </p>
                   </div>
                 </div>
@@ -74,7 +74,7 @@ html, body {
               <article class="media">
                 <div class="media-left">
                   <figure class="image is-64x64">
-                    <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
+                    <img src="<%= Routes.static_path(@conn, "/images/visualize.png") %>" alt="Image">
                   </figure>
                 </div>
                 <div class="media-content">
@@ -82,7 +82,7 @@ html, body {
                     <p>
                       <strong>Visualize</strong>
                       <br>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
+                      Visualize the crimes committed around the world and their details.
                     </p>
                   </div>
                 </div>
