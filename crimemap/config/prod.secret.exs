@@ -15,6 +15,7 @@ database_url =
 config :crimemap, Crimemap.Repo,
   # ssl: true,
   url: database_url,
+  types: Crimemap.PostgrexTypes,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
 secret_key_base =
