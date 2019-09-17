@@ -8,7 +8,7 @@ jobs:
       # specify the version here
       - image: circleci/elixir:1.8
 
-      - image: circleci/postgres:9.4
+      - image: kartoza/postgis
         environment:
           - POSTGRES_USER=postgres
           - POSTGRES_PASSWORD=postgres
