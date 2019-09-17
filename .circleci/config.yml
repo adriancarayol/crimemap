@@ -17,7 +17,7 @@ jobs:
 
     working_directory: ~/crimemap/crimemap/
     steps:
-      - checkout
+      - checkout:
           path: ~/crimemap
   
       # Install psql client
