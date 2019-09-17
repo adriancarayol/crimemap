@@ -15,9 +15,10 @@ jobs:
           - POSTGRES_DB=crimemap_dev
           - POSTGRES_MULTIPLE_EXTENSIONS=postgis,hstore,postgis_topology
 
-    working_directory: ~/repo/crimemap/
+    working_directory: ~/crimemap/crimemap/
     steps:
       - checkout
+          path: ~/crimemap
   
       # Install psql client
       - run: sudo apt install -y postgresql-client || true
