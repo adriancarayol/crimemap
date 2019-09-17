@@ -1,0 +1,30 @@
+# Elixir CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-elixir/ for more details
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version here
+      - image: circleci/elixir:1.4
+
+      - image: circleci/postgres:9.4
+        environment:
+          - POSTGRES_USER=postgres
+          - POSTGRES_PASSWORD=postgres
+          - POSTGRES_DB=crimemap_dev
+          - POSTGRES_MULTIPLE_EXTENSIONS=postgis,hstore,postgis_topology
+
+    working_directory: ~/repo/
+    steps:
+      - checkout
+  
+      # Install psql client
+      - run: sudo apt install -y postgresql-client || true
+      - run: cd crimemap/; ls -la; pwd;
+
+      # Install elixir dependencies and apply migrations
+      - run: mix deps.get
+      - run: mix ecto.create
+      - run: mix ecto.migrate
+      - run: mix test
