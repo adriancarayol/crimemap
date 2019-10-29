@@ -1,5 +1,19 @@
 version: '3'
 services:
+  phoenix:
+    build:
+      context: .
+    environment: 
+      - PGUSER=postgres
+      - PGPASSWORD=postgres
+      - PGDATABASE=crimemap_dev
+      - PGPORT=5432
+      - PGHOST=postgres
+    ports:
+      - "4000:4000"
+    depends_on: 
+      - postgres
+
   postgres:
     image: kartoza/postgis
     environment:
@@ -10,8 +24,9 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
     ports:
-      - 5432:5432
- 
+      - "5432:5432"
+    restart: unless-stopped
+  
 volumes:
   db-data:
     driver: local

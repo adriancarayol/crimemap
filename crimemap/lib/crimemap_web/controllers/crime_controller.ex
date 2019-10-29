@@ -32,10 +32,10 @@ defmodule CrimemapWeb.CrimeController do
     crime_params = Map.put(crime_params, "user_id", user.id)
 
     case Crimes.create_crime(crime_params) do
-      {:ok, crime} ->
+      {:ok, _} ->
         conn
         |> put_flash(:info, "Crime created successfully.")
-        |> redirect(to: Routes.crime_path(conn, :show, crime))
+        |> redirect(to: Routes.crime_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -74,7 +74,7 @@ defmodule CrimemapWeb.CrimeController do
           conn
           |> put_flash(:info, "Crime updated successfully.")
           |> redirect(to: Routes.crime_path(conn, :show, crime))
-  
+
         {:error, %Ecto.Changeset{} = changeset} ->
           render(conn, "edit.html", crime: crime, changeset: changeset)
       end
