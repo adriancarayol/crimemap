@@ -1,9 +1,10 @@
-/_build
-/cover
-/deps
+crimemap/_build
+crimemap/cover
+crimemap/deps
 /doc
-/.fetch
-erl_crash.dump
+crimemap/.fetch
+crimemap/erl_crash.dump
 *.ez
 *.beam
-/config/*.secret.exs
+crimemap/config/*.secret.exs
+
